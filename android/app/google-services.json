@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "667227505341",
+    "project_id": "fir-6b182",
+    "storage_bucket": "fir-6b182.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:667227505341:android:4d2a54d572d678ba462dd4",
+        "android_client_info": {
+          "package_name": "com.example.eatopia"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCv8zVAMULVY16F4VqScNZ1xKfkKZ2gzyo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:667227505341:android:82bed0eebdbf8ad8462dd4",
+        "android_client_info": {
+          "package_name": "com.example.foody_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCv8zVAMULVY16F4VqScNZ1xKfkKZ2gzyo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
