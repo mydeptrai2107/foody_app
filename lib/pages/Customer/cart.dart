@@ -55,12 +55,33 @@ class _CartState extends State<Cart> with AutomaticKeepAliveClientMixin {
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: ListView.builder(
-                      itemCount: CartList.list.length,
-                      itemBuilder: (context, index) {
-                        return CartItem(index: index);
-                      },
-                    ),
+                    child: CartList.list.isEmpty
+                        ? SizedBox(
+                            width: double.infinity,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  'images/shopping_cart.png',
+                                  fit: BoxFit.cover,
+                                ),
+                                const Text(
+                                  textAlign: TextAlign.center,
+                                  'Bạn chưa có sản phẩm nào trong giỏ hàng',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                        : ListView.builder(
+                            itemCount: CartList.list.length,
+                            itemBuilder: (context, index) {
+                              return CartItem(index: index);
+                            },
+                          ),
                   ),
                 ),
                 CartList.list.isEmpty

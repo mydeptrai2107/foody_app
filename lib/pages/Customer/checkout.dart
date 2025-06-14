@@ -12,6 +12,7 @@ import 'package:foody_app/utilities/order.dart';
 import 'package:foody_app/utilities/order_item.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:qr_flutter/qr_flutter.dart';
 
 class CheckoutPage extends StatefulWidget {
   const CheckoutPage({super.key, required this.userData});
@@ -245,6 +246,30 @@ class _CheckoutPageState extends State<CheckoutPage> {
                         });
                       },
                     ),
+                    RadioListTile(
+                      selected: true,
+                      value: 'banking',
+                      title: const Text(
+                        'Ngân hàng',
+                        style: TextStyle(
+                          fontSize: 14,
+                        ),
+                      ),
+                      groupValue: paymentMethod,
+                      onChanged: (value) {
+                        setState(() {
+                          paymentMethod = value!;
+                        });
+                      },
+                    ),
+                    if (paymentMethod == 'banking')
+                      Center(
+                        child: QrImageView(
+                          data: '1234567890',
+                          version: QrVersions.auto,
+                          size: 150,
+                        ),
+                      ),
                   ],
                 ),
               ),

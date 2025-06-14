@@ -317,7 +317,7 @@ class _AddOnWidgetState extends State<AddOnWidget> {
                 ),
                 const Spacer(),
                 Text(
-                  '+ Rs ${e.value}',
+                  Formatter.formatCurrency(e.value),
                   style: const TextStyle(fontSize: 15),
                 ),
               ],

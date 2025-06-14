@@ -5,6 +5,7 @@ import 'package:foody_app/pages/Restaurant/items.dart';
 import 'package:foody_app/services/auth_services.dart';
 import 'package:foody_app/services/db.dart';
 import 'package:flutter/material.dart';
+import 'package:foody_app/utilities/formatter.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../utilities/custom_text_field.dart';
@@ -298,6 +299,7 @@ class _AddItemPageState extends State<AddItemPage> {
                             'price': double.parse(priceController.text),
                             'category': selectedCategory,
                             'addOns': addOns,
+                            'isAvailable': true,
                           });
                           setState(() {
                             isLoading = false;
@@ -365,7 +367,7 @@ Widget buildAddOnList(BuildContext context, Map<String, int> addOns) {
                   ),
                   tileColor: Colors.white,
                   title: Text(
-                    '${addOns.keys.toList()[index]}\nRs: ${addOns.values.toList()[index]}',
+                    '${addOns.keys.toList()[index]}\n ${Formatter.formatCurrency(addOns.values.toList()[index])}',
                   ),
                   trailing: IconButton(
                     onPressed: () {

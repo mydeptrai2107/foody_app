@@ -283,18 +283,19 @@ class _ItemListState extends State<ItemList>
         itemCount: widget.itemList.length,
         itemBuilder: (BuildContext context, int index) {
           return GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ItemDescPage(
-                      item: widget.itemList[index],
-                      restId: widget.restId,
-                    ),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ItemDescPage(
+                    item: widget.itemList[index],
+                    restId: widget.restId,
                   ),
-                );
-              },
-              child: widget.itemList[index].buildItemCard());
+                ),
+              );
+            },
+            child: widget.itemList[index].buildItemCard(),
+          );
         },
       ),
     );

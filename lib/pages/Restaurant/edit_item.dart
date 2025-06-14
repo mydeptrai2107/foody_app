@@ -10,6 +10,7 @@ import 'package:foody_app/services/db.dart';
 import 'package:foody_app/utilities/cache_manger.dart';
 import 'package:foody_app/utilities/custom_shimmer.dart';
 import 'package:flutter/material.dart';
+import 'package:foody_app/utilities/formatter.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../utilities/custom_text_field.dart';
@@ -412,6 +413,58 @@ class _EditItemPageState extends State<EditItemPage> {
     );
   }
 
+  Widget buildAddOnList(BuildContext context, Map<String, dynamic> addOns) {
+    return SizedBox(
+      height: 300,
+      child: ListView.builder(
+        itemCount: max(addOns.length, 1),
+        itemBuilder: (context, index) {
+          return addOns.isEmpty
+              ? const SizedBox(
+                  height: 300, child: Center(child: Text('No Add ons!')))
+              : Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  elevation: 5,
+                  child: ListTile(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    leading: SizedBox(
+                      width: 20,
+                      child: IconButton(
+                        iconSize: 20,
+                        onPressed: () {
+                          final key = GlobalKey<FormState>();
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return buildEditAddon(
+                                    context, key, addOns, index);
+                              });
+                        },
+                        icon: const Icon(Icons.edit),
+                      ),
+                    ),
+                    tileColor: Colors.white,
+                    title: Text(
+                      '${addOns.keys.toList()[index]}\n ${Formatter.formatCurrency(addOns.values.toList()[index])}',
+                    ),
+                    trailing: IconButton(
+                      onPressed: () {
+                        addOns.remove(addOns.keys.toList()[index]);
+                        setState(() {});
+                      },
+                      icon: const Icon(Icons.delete),
+                    ),
+                  ),
+                );
+        },
+      ),
+    );
+  }
+
   Widget buildDeleteAlert(BuildContext context) {
     return AlertDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
@@ -444,57 +497,6 @@ Widget buildEditImageWidget(File imageFile, String imageURL) {
   } else {
     return Image.file(imageFile);
   }
-}
-
-Widget buildAddOnList(BuildContext context, Map<String, dynamic> addOns) {
-  return SizedBox(
-    height: 300,
-    child: ListView.builder(
-      itemCount: max(addOns.length, 1),
-      itemBuilder: (context, index) {
-        return addOns.isEmpty
-            ? const SizedBox(
-                height: 300, child: Center(child: Text('No Add ons!')))
-            : Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                elevation: 5,
-                child: ListTile(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  leading: SizedBox(
-                    width: 20,
-                    child: IconButton(
-                      iconSize: 20,
-                      onPressed: () {
-                        final key = GlobalKey<FormState>();
-                        showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return buildEditAddon(
-                                  context, key, addOns, index);
-                            });
-                      },
-                      icon: const Icon(Icons.edit),
-                    ),
-                  ),
-                  tileColor: Colors.white,
-                  title: Text(
-                    '${addOns.keys.toList()[index]}\nRs: ${addOns.values.toList()[index]}',
-                  ),
-                  trailing: IconButton(
-                    onPressed: () {
-                      addOns.remove(addOns.keys.toList()[index]);
-                    },
-                    icon: const Icon(Icons.delete),
-                  ),
-                ),
-              );
-      },
-    ),
-  );
 }
 
 Widget buildEditAddon(BuildContext context, GlobalKey<FormState> key,

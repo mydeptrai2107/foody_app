@@ -5,6 +5,7 @@ import 'package:foody_app/utilities/cache_manger.dart';
 import 'package:foody_app/utilities/colours.dart';
 import 'package:foody_app/utilities/custom_shimmer.dart';
 import 'package:flutter/material.dart';
+import 'package:foody_app/utilities/formatter.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
 
 import 'user_res_page.dart';
@@ -83,8 +84,8 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
                       Text(
                         '${results.length} kết quả tìm kiếm cho "${widget.query}"',
                         style: const TextStyle(
-                          fontSize: 20,
-                          fontFamily: 'ubuntu-bold',
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                       const SizedBox(height: 20),
@@ -266,7 +267,7 @@ Widget buildSearchItemList(List<SearchResult> results, int index) {
                       ),
                       const Spacer(),
                       Text(
-                        'Rs ${item.price}',
+                        Formatter.formatCurrency(item.price),
                         style: const TextStyle(
                             fontFamily: 'Ubuntu-bold',
                             fontWeight: FontWeight.bold,
