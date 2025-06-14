@@ -1,5 +1,3 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:foody_app/pages/Restaurant/items.dart';
 import 'package:foody_app/services/auth_services.dart';
@@ -133,24 +131,79 @@ class _ResItemsPageState extends State<ResItemsPage>
                     maintainState: true,
                     title: Row(
                       children: [
-                        Text(ctg,
-                            style: const TextStyle(
-                              fontSize: 20,
-                              fontFamily: 'ubuntu-bold',
-                              color: Colors.black,
-                            )),
+                        Text(
+                          ctg,
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                        ),
                         const Spacer(),
                         IconButton(
-                            onPressed: () async {
-                              await showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return buildEditCtg(
-                                        context, ctgItems, index);
-                                  });
+                          onPressed: () async {
+                            bool? confirm = await showDialog<bool>(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                title: const Text('Xác nhận xóa'),
+                                content: const Text(
+                                    'Bạn có chắc muốn xóa danh mục này không?'),
+                                actions: [
+                                  TextButton(
+                                    child: const Text('Hủy'),
+                                    onPressed: () =>
+                                        Navigator.pop(context, false),
+                                  ),
+                                  TextButton(
+                                    child: const Text('Xóa'),
+                                    onPressed: () =>
+                                        Navigator.pop(context, true),
+                                  ),
+                                ],
+                              ),
+                            );
+
+                            if (confirm == true) {
+                              String ctgToDelete = ctg;
+                              String uid = AuthServices().auth.currentUser!.uid;
+
+                              for (Item item in ctgItems[ctgToDelete]!) {
+                                await FirebaseFirestore.instance
+                                    .collection('Restaurants')
+                                    .doc(uid)
+                                    .collection('Items')
+                                    .doc(item.itemId)
+                                    .delete();
+                              }
+
+                              ctgItems.remove(ctgToDelete);
+
+                              await FirebaseFirestore.instance
+                                  .collection('Restaurants')
+                                  .doc(uid)
+                                  .update({
+                                'Categories': ctgItems.keys.toList(),
+                              });
+
                               setState(() {});
-                            },
-                            icon: const Icon(Icons.edit, color: Colors.black)),
+                            }
+                          },
+                          icon: const Icon(
+                            Icons.delete,
+                            color: Colors.red,
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: () async {
+                            await showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return buildEditCtg(context, ctgItems, index);
+                                });
+                            setState(() {});
+                          },
+                          icon: const Icon(Icons.edit, color: Colors.black),
+                        ),
                       ],
                     ),
                     children: ctgItems[ctg]!

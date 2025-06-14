@@ -350,7 +350,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
   }
 
   Future<void> makePayment(BuildContext context, String price) async {
-    if (paymentMethod == "COD") {
+    if (paymentMethod == "COD" || paymentMethod == 'banking') {
       try {
         await _submitOrder(context);
         if (!context.mounted) return;

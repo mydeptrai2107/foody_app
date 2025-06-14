@@ -453,7 +453,6 @@ class _PastOrderState extends State<PastOrder> {
         : ListView.builder(
             itemCount: orders.isEmpty ? 1 : orders.length,
             shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
               if (orders.isEmpty) {
                 return Container(
